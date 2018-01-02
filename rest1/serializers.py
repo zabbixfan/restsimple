@@ -41,7 +41,7 @@ class UserSerializer1(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id', 'username', 'snippets')
+        fields = ('id', 'username', 'snippets','owner_id')
 # class SnippetSerializer(serializers.Serializer):
 #     id = serializers.IntegerField(read_only=True)
 #     title = serializers.CharField(required=False, allow_blank=True, max_length=100)

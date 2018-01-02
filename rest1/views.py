@@ -9,6 +9,7 @@ from rest_framework import viewsets
 from rest1.serializers import UserSerializer, GroupSerializer
 from rest1.models import Data
 from rest1.serializers import DataSerializer
+from rest_framework.pagination import LimitOffsetPagination
 
 
 class DataViewSet(viewsets.ModelViewSet):
@@ -55,16 +56,18 @@ from rest_framework import status
 from rest_framework.parsers import JSONParser
 from rest_framework import mixins
 from rest_framework import generics
-
+from rest_framework.request import Request
+#
 # class SnippetList(APIView):
 #     """
 #     List all snippets, or create a new snippet.
 #     """
 #     def get(self, request, format=None):
 #         snippets = Snippet.objects.all()
+#         Request.query_params
 #         serializer = SnippetSerializer(snippets, many=True)
 #         return Response(serializer.data)
-#
+# #
 #     def post(self, request, format=None):
 #         # data = JSONParser.parse(request)
 #         serializer = SnippetSerializer(data=request.data)
@@ -72,12 +75,15 @@ from rest_framework import generics
 #             serializer.save()
 #             return Response(serializer.data, status=status.HTTP_201_CREATED)
 #         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+# class CustomPagination(LimitOffsetPagination):
+
 class SnippetList(mixins.ListModelMixin,
                   mixins.CreateModelMixin,
                   generics.GenericAPIView):
 # class SnippetList(mixins.ListModelMixin,mixins.CreateModelMixin,generics.GenericAPIView):
     queryset = Snippet.objects.all()
     serializer_class = SnippetSerializer
+    pagination_class = LimitOffsetPagination
     def get(self, request, *args, **kwargs):
         return self.list(request, *args, **kwargs)
     def post(self, request, *args, **kwargs):
