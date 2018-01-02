@@ -78,7 +78,7 @@ WSGI_APPLICATION = 'restsimple.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'restsimple',
+        'NAME': 'restsimple2',
         'USER': 'root',
         'PASSWORD': '12345',
         'HOST': '192.168.40.179',
