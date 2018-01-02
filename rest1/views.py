@@ -15,7 +15,6 @@ class DataViewSet(viewsets.ModelViewSet):
     serializer_class = DataSerializer
     print(queryset)
 
-
 class UserViewSet(viewsets.ModelViewSet):
     """
     API端：允许查看和编辑用户
@@ -30,3 +29,4 @@ class GroupViewSet(viewsets.ModelViewSet):
     """
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
+    #todo
