@@ -3,6 +3,7 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer
+from rest_framework import exceptions
 from .models import Data
 
 class DataSerializer(ModelSerializer):
@@ -36,12 +37,17 @@ from django.contrib.auth.models import User
 class UserSerializer1(serializers.ModelSerializer):
     snippets = serializers.PrimaryKeyRelatedField(many=True, queryset=Snippet.objects.all())
     owner = serializers.ReadOnlyField(source='owner.username')
-
-
-
     class Meta:
         model = User
         fields = ('id', 'username', 'snippets','owner_id')
+class SimpleSerializer(serializers.Serializer):
+    content = serializers.ListField(max_length=200,required=True)
+    def validate_content(self,value):
+        print(value)
+        if '1' not in value:
+            raise exceptions.ValidationError("value错误")
+        return value
+
 # class SnippetSerializer(serializers.Serializer):
 #     id = serializers.IntegerField(read_only=True)
 #     title = serializers.CharField(required=False, allow_blank=True, max_length=100)
