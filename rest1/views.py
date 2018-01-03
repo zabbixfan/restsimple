@@ -181,7 +181,29 @@ def get_parameter_dic(request, *args, **kwargs):
         return query_params
     else:
         return result_data
+from rest_framework import permissions
+
+from functools import partial
+class UserPermission(permissions.BasePermission):
+    expects_authentication = False
+    message ="goodday"
+    def __init__(self, allowed_methods):
+        self.allowed_methods = allowed_methods
+    def has_permission(self, request, view):
+        print(self.allowed_methods)
+        return False
+    def has_object_permission(self, request, view, obj):
+        print(obj)
+        if view.action == 'retrieve':
+            return request.user.is_authenticated() and (obj == request.user or request.user.is_admin)
+        elif view.action in ['update', 'partial_update']:
+            return request.user.is_authenticated() and (obj == request.user or request.user.is_admin)
+        elif view.action == 'destroy':
+            return request.user.is_authenticated() and request.user.is_admin
+        else:
+            return False
 class SimpleView(mixins.ListModelMixin,mixins.CreateModelMixin,generics.GenericAPIView):
+    permission_classes = (partial(UserPermission,'admin'),)
     def get(self,request):
         q=Data.objects.all()
         request_data = get_parameter_dic(request)
