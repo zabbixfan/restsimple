@@ -80,8 +80,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'restsimple2',
         'USER': 'root',
-        'PASSWORD': '12345',
-        'HOST': '192.168.40.179',
+        'PASSWORD': '',
+        'HOST': '127.0.0.1',
         'PORT': 3306,
     }
 }

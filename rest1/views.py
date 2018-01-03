@@ -7,10 +7,17 @@ def index(request):
 from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
 from rest1.serializers import UserSerializer, GroupSerializer
-from rest1.models import Data
-from rest1.serializers import DataSerializer
+from rest1.models import Data,Snippet
+from rest1.serializers import DataSerializer,SnippetSerializer
 from rest_framework.pagination import LimitOffsetPagination
-
+from django.http import Http404
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from rest_framework.parsers import JSONParser
+from rest_framework import mixins
+from rest_framework import generics
+from rest_framework.request import Request
 
 class DataViewSet(viewsets.ModelViewSet):
     queryset = Data.objects.all()
@@ -47,16 +54,7 @@ class UserDetail(generics.RetrieveAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer1
 
-from rest1.models import Snippet
-from rest1.serializers import SnippetSerializer
-from django.http import Http404
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status
-from rest_framework.parsers import JSONParser
-from rest_framework import mixins
-from rest_framework import generics
-from rest_framework.request import Request
+
 #
 # class SnippetList(APIView):
 #     """
