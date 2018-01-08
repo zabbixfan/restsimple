@@ -61,6 +61,7 @@ from rest_framework.request import Request
 from rest_framework.permissions import IsAuthenticated,BasePermission
 from rest_framework import exceptions
 from rest_framework.authentication import BaseAuthentication
+import django_filters.rest_framework
 
 class UserAuthView(BaseAuthentication):
     def authenticate(self, request):
@@ -110,6 +111,9 @@ class SnippetList(mixins.ListModelMixin,
     queryset = Snippet.objects.all()
     serializer_class = SnippetSerializer
     pagination_class = LimitOffsetPagination
+    filter_backends = (django_filters.rest_framework.DjangoFilterBackend,)
+    filter_backends = (django_filters.rest_framework)
+    filter_fields = ('code',)
     # permission_classes = (CustomPermisson,)
     # authentication_classes = [UserAuthView,]
     def get(self, request, *args, **kwargs):
